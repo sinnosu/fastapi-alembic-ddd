@@ -42,7 +42,7 @@ schemas --- response schemas
 
 ```
 ## CQRS repository pattern
-reference doc :https://iktakahiro.dev/python-ddd-onion-architecture
+reference doc :https://iktakahiro.dev/python-ddd-onion-architecture#heading-cqrs-pattern
 
  - query: query service (pass domain)
    usecase -> usecase-queryservice(interface) -> infrastructure-queryservice(implement)
