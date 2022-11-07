@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  db:
+    image: "fastapi_db:0.1.0"
+    container_name: "fastapi_db"
+    build:
+      context: ./docker/db
+      dockerfile: Dockerfile
+    restart: always
+    tty: true
+    ports:
+      - '3333:3306'
+    volumes:
+      - data-volume:/var/lib/mysql
+      - ./docker/db/conf.d:/etc/mysql/conf.d:cached
+    networks:
+      - fastapi_network
+    environment:
+      APP_ENV: "development"
+      TZ: "Asia/Tokyo"
+    env_file:
+      - .env.development
+
+  api:
+    image: "fastapi_api:0.1.0"
+    container_name: "fastapi_api"
+    depends_on:
+      - db
+    build:
+      context: ./docker/api
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8000"
+    volumes:
+      - ./app:/usr/src/app/app:cached
+      - ./db:/usr/src/app/db:cached
+      - ./scripts:/usr/src/app/scripts:cached
+    working_dir: /usr/src/app/scripts
+    command: bash -c "cd /usr/src/app/app && uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    networks:
+      - fastapi_network
+    environment:
+      APP_ENV: "development"
+      TZ: "Asia/Tokyo"
+    env_file:
+      - .env.development
+
+networks:
+  default:
+    external:
+      name: bridge
+  fastapi_network:
+    name: fastapi_network
+    driver: bridge
+    external: true
+
+volumes:
+  data-volume:
