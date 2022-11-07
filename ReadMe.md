@@ -28,11 +28,14 @@ memo.
 <directory>       <content(layer>
 presentation   -> routers (controller)
 usecase        -> appservice (application_service)
+ - XXX_usecase        --- applicatiion service called presentation layer
+ - XXX_queryservice   --- query service interface
 domain         -> domain (entity, value_object)
  |-entity           --- domain model
  |-value_object     --- value object <ex> validataion check
  |-repository   --- repository interface
 infrastracture -> infrastracture
+ |-queryservice   --- query service implements
  |-repository   --- repository implements
 models  --- table definition 
 schemas --- response schemas
@@ -41,10 +44,10 @@ schemas --- response schemas
 ## CQRS repository pattern
 reference doc :https://iktakahiro.dev/python-ddd-onion-architecture
 
- - query: query service -> pass domain
-   use case -> query service(interface) -> infrastructure(implement)
+ - query: query service (pass domain)
+   usecase -> usecase-queryservice(interface) -> infrastructure-queryservice(implement)
  - Command: repository service 
-   use case -> domain(interface) -> infrastructure(implement)
+   usecase -> domain-repository (interface) -> infrastructure-repository(implement)
 
 modelの操作が不要のときはシンプルにクエリーサービスを利用し、
 データの保存などdomainモデルの操作が必要ならdomain層(repository)を使う
