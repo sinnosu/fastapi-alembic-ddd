@@ -4,6 +4,7 @@
 **onion architecture**
 
 **architecture image**
+```
 ==================   ====================
 |  presentation  |   |  infrastructure  |
 ==================   ====================
@@ -17,7 +18,7 @@
 =========================================
 |                domain                 |
 =========================================
-
+```
 memo.
   ▼ : call or use
   ▽ : implement
@@ -159,8 +160,12 @@ Please edit env.py while referring to sample/env.py
 
 ## Documents
  - Fast API Router <Original Documents>
-   https://fastapi.tiangolo.com/tutorial/bigger-applications/
+   - https://fastapi.tiangolo.com/tutorial/bigger-applications/
  - FastAPI 入門
-   https://zenn.dev/sh0nk/books/537bb028709ab9/viewer/86648d
+   - https://zenn.dev/sh0nk/books/537bb028709ab9/viewer/86648d
  - 参考にしたパッケージ構成
-   https://zenn.dev/yusugomori/articles/a3d5dc8baf9e386a58e5
+   - https://zenn.dev/yusugomori/articles/a3d5dc8baf9e386a58e5
+ - 参考にし概念・ソース
+   - https://speakerdeck.com/iktakahiro/ddd-and-onion-architecture-in-python?slide=57
+   - https://github.com/iktakahiro/dddpy
+   
