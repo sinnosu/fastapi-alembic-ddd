@@ -1,7 +1,7 @@
 
 
 # Architecture
-**onion architecture**
+**architecture: onion architecture**
 
 **architecture image**
 ```
@@ -50,23 +50,24 @@ modelの操作が不要のときはシンプルにクエリーサービスを利
 データの保存などdomainモデルの操作が必要ならdomain層(repository)を使う
 
 #### promises
- - think domain center -> staring domain modeling
+ - think domain center , otherwise start domain modeling
  - dependence is absolutely protected
 
 
 
 # Getting start
-## pip library install
+## Setting some files
+### Pip library install
  - pipenv install
  ```
  $ pipenv --python 3.10
  $ pipenv install --three fastapi fastapi-sqlalchemy sqlalchemy_utils mysqlclient pytest inject pydantic alembic uvicorn sqlalchemy
  ```
 
-## create docker/api/requirements.txt
+### Create docker/api/requirements.txt
 `$ pipenv requirements > docker/api/requirements.txt`
 
-## alembic init
+### Alembic init
  `$ cd db`
  `$ alembic init migrations`
   -> create maigration directory
@@ -74,7 +75,7 @@ modelの操作が不要のときはシンプルにクエリーサービスを利
    "Comment out below code"
    `sqlalchemy.url = driver://user:pass@localhost/dbname`
 
-## edit almebic/env.py
+### Edit almebic/env.py
 Edit "migrations/env.py" 
 quote -> "db/samples/env.py"
 Please edit env.py while referring to sample/env.py
@@ -82,27 +83,25 @@ Please edit env.py while referring to sample/env.py
  ` -- added code here -- `
  ` -- changed code here -- `
 
-## preparing seed file
+### Preparing seed file
  ` cp samples/seed.py ./seed.py`
 
 
-## Create Docker environment start
+## Build & Start Docker container
 
-### create docker network
+### Create docker network
  `$ docker network create fastapi_network`
 
-#### Rebuild & run api & db container
+### Rebuild & run api & db container
  ```
  $ docker-compose build
  $ docker-compose up
-
-**DBは消えたらまずいのでコンテナは停止しても自動削除されない*
  
  ```
  - try connect
    http://localhost:8888/docs
 
-#### Migration
+## DB Migration
 ```
 # enter api container
  $ docker-compose run api bash
@@ -119,7 +118,7 @@ Please edit env.py while referring to sample/env.py
 # maigrate
  $ alembic upgrade head
 ```
-### insert DB using by seed file.
+### Insert DB using by seed file.
 !!! run on docker in api container
 ```
 # enter api container
@@ -127,45 +126,42 @@ Please edit env.py while referring to sample/env.py
  $ python seed.py
 ``` 
 
-# Access to fast-api.
+## Access to fast-api.
  - try connect
    http://localhost:8888/docs
 
 
-## Other
+# Chips
 ### how to login mysql 
- - want to see login mysql
   ```
   $ docker-compose run api bash
   $ cd /usr/src/app/db  
   > mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD"
   > use test_db
   ```
-- stop container running by docker compose
+### stop container running using docker-compose
   `$ docker ccompose down`
 
-### use case migration methods
-- some methods migration
-    - the first migrate
-      $ alembic upgrade head
-    - step by step upgrade
-      $ alembic upgrade +1
-    - downgrade
-      $ alembic downgrade -1
-      &
-      if you remake migration file, delete migration file
-    - all reset
-      $ alembic downgrade base
+### how to use case migration methods
+  - the first migrate  
+     `$ alembic upgrade head`
+  - step by step upgrade  
+     `$ alembic upgrade +1`
+  - downgrade  
+     `$ alembic downgrade -1`  
+     if you remake migration file, delete migration file
+  - all reset  
+     `$ alembic downgrade base`
 
 
-## Documents
+# Reference Documents
  - Fast API Router <Original Documents>
    - https://fastapi.tiangolo.com/tutorial/bigger-applications/
  - FastAPI 入門
    - https://zenn.dev/sh0nk/books/537bb028709ab9/viewer/86648d
  - 参考にしたパッケージ構成
    - https://zenn.dev/yusugomori/articles/a3d5dc8baf9e386a58e5
- - 参考にし概念・ソース
+ - 参考にした考え方とソース
    - https://speakerdeck.com/iktakahiro/ddd-and-onion-architecture-in-python?slide=57
    - https://github.com/iktakahiro/dddpy
    
