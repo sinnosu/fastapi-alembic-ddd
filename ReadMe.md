@@ -121,7 +121,7 @@ Please edit env.py while referring to sample/env.py
 # maigrate
  $ alembic upgrade head
 ```
-### Insert DB using by seed file.
+### Insert DB with seed file.
 !!! run on docker in api container
 ```
 # enter api container
@@ -142,7 +142,7 @@ Please edit env.py while referring to sample/env.py
   > mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD"
   > use test_db
   ```
-### stop container running using docker-compose
+### stop container running with docker-compose
   `$ docker ccompose down`
 
 ### how to use case migration methods
